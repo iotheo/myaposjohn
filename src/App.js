@@ -4,11 +4,13 @@ import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
 import createIssue from "./actions";
 import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
+import SearchBar from "./components/Searchbar";
 
 
 
 function App() {
-  const [isAuthenticated, setAuthenticated] = useState();
+  const [isAuthenticated, setAuthenticated] = useState(true);
   const [hasSubmitted, setSubmitted] = useState();
 
   const dispatch = useDispatch(createIssue);
@@ -29,7 +31,8 @@ function App() {
 
   return (
     <>
-      <button onClick={() => dispatch(createIssue())}>Create Issue</button>
+      <Button variant="success" className="mb-3" onClick={() => dispatch(createIssue())}>New Issue</Button>
+      <SearchBar />
       <Dashboard />
     </>
   )

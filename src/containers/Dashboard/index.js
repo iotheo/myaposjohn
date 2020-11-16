@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
+
+import { Dropdown } from 'react-bootstrap';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+
 const fetchOptions = {
   method: 'GET',
   headers: {
@@ -37,7 +43,18 @@ const columns = [{
   {
     dataField: 'id',
     text: 'Actions',
-    formatter: cell => <div>{cell}</div>
+    formatter: cell => <Dropdown>
+      <Dropdown.Toggle variant="secondary" id="cog">
+        <FontAwesomeIcon icon={faCog} />
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item >Modify</Dropdown.Item>
+        <Dropdown.Item >Test</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item >Close issue</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   },
 ];
 
