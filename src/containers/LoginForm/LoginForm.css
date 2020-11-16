@@ -22,4 +22,5 @@
 .login-form .login-form__wrong-credentials {
   position: absolute;
   top: 0;
+  border-radius: 0;
 }
