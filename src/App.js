@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import LoginForm from "./containers/LoginForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [isAuthenticated, setAuthenticated] = useState();
+  const [hasSubmitted, setSubmitted] = useState();
+
+  function handleLogin(input) {
+    const { username, password } = input;
+
+    if (username === 'john' && password === 'secret') {
+      setAuthenticated(true);
+    }
+
+    setSubmitted(true);
+  }
+
+  if (!isAuthenticated) {
+    return <LoginForm onLogin={handleLogin} hasSubmitted={hasSubmitted} />;
+  }
 }
 
 export default App;

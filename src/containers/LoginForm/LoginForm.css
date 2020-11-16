@@ -1,0 +1,25 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 4px;
+  width: 300px;
+  margin: auto;
+  margin-top: 20vh;
+  padding: 5rem 0;
+  position: relative;
+}
+
+.login-form__username {
+  margin-bottom: 0.5rem;
+}
+
+.login-form button {
+  margin-top: 1rem;
+}
+
+.login-form .login-form__wrong-credentials {
+  position: absolute;
+  top: 0;
+}
