@@ -6,17 +6,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { issuesFetchRequested } from '../../actions';
-
-const fetchOptions = {
-  method: 'GET',
-  headers: {
-    'authorization': 'token 8a565ede440c3b96d873d863d694f3fc26536481',
-    'Content-Type': 'application/json',
-    // 'cache-control': 'no-cache',
-    // 'Access-Control-Allow-Headers': '*',
-  }
-}
 
 const columns = [{
   dataField: 'title',
@@ -64,18 +53,6 @@ const Dashboard = () => {
   const [results, setResults] = useState([]);
   const [isLoading, setLoading] = useState();
   const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    dispatch(issuesFetchRequested());
-
-    fetch('https://api.github.com/repos/myapos/testing_repo/issues', fetchOptions)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setResults(data)
-    })
-  }, [dispatch])
 
   if (results.length) {
     // return (

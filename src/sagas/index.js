@@ -1,38 +1,36 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
-import { issuesFetchRequested } from '../actions';
+import { call, put, takeEvery, take, takeLatest, all } from 'redux-saga/effects';
+import { fetchIssues } from '../api';
 
-
-
-//  fetch('https://api.github.com/repos/myapos/testing_repo/issues', fetchOptions)
-//     .then(res => res.json())
-//     .then(data => {
-//       console.log(data);
-//     })
-
-
-function* fetchIssues () {
-  debugger;
+function* fetchIssuesSaga () {
   try {
-    const issues = yield call(() => console.log('Hello I\'m a saga'));
+    const response = yield call(fetchIssues);
+
+    // This is considered an error message
+    if(response.message) {
+      return yield put({
+        type: 'ISSUES_FETCH_FAILED',
+        error: {
+          message: response.message
+        }
+      });
+    }
 
     yield put({
       type: 'ISSUES_FETCH_SUCCEEDED',
-      issues,
+      issues: response,
     })
   } catch (error) {
     yield put({
-      type: "USER_FETCH_FAILED",
-      message: error.message
+      type: 'ISSUES_FETCH_FAILED',
+      error,
     });
   }
-
-
 }
 
-
-
 function* mainSaga() {
-  yield takeLatest(issuesFetchRequested, fetchIssues);
+  yield all([
+    call(fetchIssuesSaga)
+  ])
 }
 
 export default mainSaga;

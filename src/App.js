@@ -13,7 +13,7 @@ function App() {
   const [isAuthenticated, setAuthenticated] = useState(true);
   const [hasSubmitted, setSubmitted] = useState();
 
-  const dispatch = useDispatch(createIssue);
+  const dispatch = useDispatch();
 
   function handleLogin(input) {
     const { username, password } = input;
