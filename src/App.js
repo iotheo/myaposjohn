@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
-import createIssue from "./actions";
+import { createIssue } from "./actions";
 import { useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
 import SearchBar from "./components/Searchbar";

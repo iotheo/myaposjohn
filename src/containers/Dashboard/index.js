@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
 import BootstrapTable from 'react-bootstrap-table-next';
-
-
 import { Dropdown } from 'react-bootstrap';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { issuesFetchRequested } from '../../actions';
 
 const fetchOptions = {
   method: 'GET',
@@ -62,9 +63,11 @@ const columns = [{
 const Dashboard = () => {
   const [results, setResults] = useState([]);
   const [isLoading, setLoading] = useState();
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
+    dispatch(issuesFetchRequested());
 
     fetch('https://api.github.com/repos/myapos/testing_repo/issues', fetchOptions)
     .then(res => res.json())
@@ -72,7 +75,7 @@ const Dashboard = () => {
       console.log(data);
       setResults(data)
     })
-  }, [])
+  }, [dispatch])
 
   if (results.length) {
     // return (
