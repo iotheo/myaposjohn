@@ -10,7 +10,7 @@ const fetchOptions = {
 
 
 export async function fetchIssues () {
-  return await fetch('https://api.github.com/repos/myapos/testing_repoa/issues', fetchOptions)
+  return await fetch('https://api.github.com/repos/myapos/testing_repo/issues', fetchOptions)
     .then(res => res.json())
     .catch(err => err)
 }

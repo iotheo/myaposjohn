@@ -1,9 +1,11 @@
-import { call, put, takeEvery, take, takeLatest, all } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest, delay, all } from 'redux-saga/effects';
 import { fetchIssues } from '../api';
 
 function* fetchIssuesSaga () {
   try {
     const response = yield call(fetchIssues);
+
+    // yield delay(5000);
 
     // This is considered an error message
     if(response.message) {
@@ -17,7 +19,7 @@ function* fetchIssuesSaga () {
 
     yield put({
       type: 'ISSUES_FETCH_SUCCEEDED',
-      issues: response,
+      results: response,
     })
   } catch (error) {
     yield put({

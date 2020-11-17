@@ -1,20 +1,16 @@
-import { configureStore, createReducer, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware, combineReducers } from "@reduxjs/toolkit";
 import createSagaMiddleware from 'redux-saga';
 import sagas from '../sagas';
 
-const reducer = createReducer([],
-  (builder) => {
-
-
-    builder.addDefaultCase(() => {})
-  }
-)
+import { issuesReducer } from '../reducers';
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware]
 
 const store = configureStore({
-  reducer: reducer,
+  reducer: combineReducers({
+    issues: issuesReducer,
+  }),
   devTools: {
     name: "Myapos John"
   },
