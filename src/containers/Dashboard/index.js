@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -6,6 +6,7 @@ import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import Spinner from 'react-bootstrap/Spinner';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 import { renderIssuesSpinner } from '../../actions';
 
@@ -17,7 +18,8 @@ const columns = [{
   },
   {
     dataField: 'body',
-    text: 'Body'
+    text: 'Body',
+    filter: textFilter(),
   },
   {
     dataField: 'state',
@@ -43,9 +45,6 @@ const columns = [{
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item >Modify</Dropdown.Item>
-        <Dropdown.Item >Test</Dropdown.Item>
-        <Dropdown.Divider />
         <Dropdown.Item >Close issue</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
@@ -60,6 +59,8 @@ const Dashboard = () => {
   const shouldRenderSpinner = useSelector(state => state.issues.shouldRenderSpinner);
   const results = useSelector(state => state.issues.results)
 
+  const [showModal, setShowModal] = useState();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(renderIssuesSpinner())
@@ -68,14 +69,26 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, [dispatch]);
 
+  function handleCloseModal () {
+    setShowModal(false);
+  }
+
 
   if (!isLoading && results?.length) {
-    return <BootstrapTable
-    striped
-    hover
-    keyField="id"
-    data={results}
-    columns={columns} />
+    return (
+      <>
+        <BootstrapTable
+        filter={filterFactory({
+          delay: 200,
+        })}
+        striped
+        hover
+        keyField="id"
+        data={results}
+        columns={columns} />
+
+      </>
+    )
   }
 
   if (isLoading && shouldRenderSpinner) {
