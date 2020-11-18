@@ -10,7 +10,7 @@ import CreateIssueModal from './containers/CreateIssueModal';
 import { issueCreateRequested } from './actions';
 
 function App() {
-  const [isAuthenticated, setAuthenticated] = useState(true)
+  const [isAuthenticated, setAuthenticated] = useState();
   const [hasSubmitted, setSubmitted] = useState();
 
   const [showModal, setShowModal] = useState(false);

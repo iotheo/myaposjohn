@@ -2,25 +2,57 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px solid black;
-  border-radius: 4px;
-  width: 300px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  width: 90vw;
+  max-width: 450px;
   margin: auto;
   margin-top: 20vh;
-  padding: 5rem 0;
+  padding: 5rem 3rem;
   position: relative;
-}
-
-.login-form__username {
-  margin-bottom: 0.5rem;
+  -webkit-box-shadow: 3px 3px 25px 0px rgba(50, 50, 50, 0.1);
+  -moz-box-shadow:    3px 3px 25px 0px rgba(50, 50, 50, 0.1);
+  box-shadow:         3px 3px 25px 0px rgba(50, 50, 50, 0.1);
 }
 
 .login-form button {
   margin-top: 1rem;
+  width: 80%;
 }
 
-.login-form .login-form__wrong-credentials {
+.login-form__input {
+  margin-bottom: 2rem;
+  position: relative;
+  width: 80%;
+  border-radius: 2rem;
+}
+
+.login-form__input--error {
   position: absolute;
-  top: 0;
-  border-radius: 0;
+  bottom: 0;
+  margin-bottom: -1.3rem;
+  animation: testing 60ms ease-in-out forwards;
+}
+
+.login-form__credentials-error {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 3rem;
+  animation: testing 60ms ease-in-out forwards;
+}
+
+@keyframes testing {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-form button {
+    width: 150px;
+  }
+
 }

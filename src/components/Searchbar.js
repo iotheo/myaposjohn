@@ -8,12 +8,12 @@ const SearchBar = () => {
   return (
     <InputGroup className="mb-3">
       <InputGroup.Prepend>
-        <InputGroup.Text id="basic-addon1"><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
+        <InputGroup.Text id="searchbar"><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
       </InputGroup.Prepend>
       <FormControl
         placeholder="Search for issues.."
         aria-label="Username"
-        aria-describedby="basic-addon1"
+        aria-describedby="searchbar"
       />
   </InputGroup>
 
