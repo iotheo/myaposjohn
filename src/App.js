@@ -2,17 +2,52 @@ import { useState } from "react";
 import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
-import { createIssue } from "./actions";
 import { useDispatch } from "react-redux";
-import { Button, Modal } from "react-bootstrap";
 import SearchBar from "./components/Searchbar";
+import { Button } from 'react-bootstrap';
+import CreateIssueModal from './containers/CreateIssueModal';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(true)
   const [hasSubmitted, setSubmitted] = useState();
-  const [showModal, setShowModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [modalInputs, setModalInputs] = useState({
+    title: '',
+    body: '',
+  });
+
 
   const dispatch = useDispatch();
+
+  function handleCloseModal (e) {
+    setShowModal(false);
+  }
+
+  function onExited () {
+    setModalInputs({
+      title: '',
+      body: '',
+    })
+  }
+
+  function onInputChange (e) {
+    const target = e.target;
+    const name = target.name;
+
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    setModalInputs(state => ({
+      ...state,
+      [name]: value,
+    }))
+  }
+
+  function onSubmit (e) {
+    e.preventDefault();
+
+    handleCloseModal();
+
+  }
 
   function handleLogin(input) {
     const { username, password } = input;
@@ -24,10 +59,6 @@ function App() {
     setSubmitted(true);
   }
 
-  function handleCloseModal () {
-    setShowModal(false);
-  }
-
   if (!isAuthenticated) {
     return <LoginForm onLogin={handleLogin} hasSubmitted={hasSubmitted} />;
   }
@@ -37,20 +68,14 @@ function App() {
       <Button variant="success" className="mb-3" onClick={() => setShowModal(true)}>New Issue</Button>
       <SearchBar />
       <Dashboard />
-      <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create an issue</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleCloseModal}>
-              Create Issue
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      <CreateIssueModal
+        onExited={onExited}
+        inputs={modalInputs}
+        onChange={onInputChange}
+        showModal={showModal}
+        onSubmit={onSubmit}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   )
 }

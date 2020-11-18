@@ -4,9 +4,6 @@ import { Button, Alert } from 'react-bootstrap';
 import './LoginForm.css';
 
 const LoginForm = ({ onLogin, hasSubmitted }) => {
-
-  console.log(hasSubmitted)
-
   return <Form onSubmit={onLogin} >
     {({ handleSubmit }) => (
       <form className="login-form" onSubmit={handleSubmit}>
