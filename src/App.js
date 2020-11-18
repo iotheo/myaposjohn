@@ -7,9 +7,12 @@ import SearchBar from "./components/Searchbar";
 import { Button } from 'react-bootstrap';
 import CreateIssueModal from './containers/CreateIssueModal';
 
+import { issueCreateRequested } from './actions';
+
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(true)
   const [hasSubmitted, setSubmitted] = useState();
+
   const [showModal, setShowModal] = useState(false);
   const [modalInputs, setModalInputs] = useState({
     title: '',
@@ -46,7 +49,7 @@ function App() {
     e.preventDefault();
 
     handleCloseModal();
-
+    dispatch(issueCreateRequested(modalInputs));
   }
 
   function handleLogin(input) {

@@ -1,5 +1,6 @@
 import { call, put, takeEvery, takeLatest, delay, all } from 'redux-saga/effects';
-import { fetchIssues } from '../api';
+import { fetchIssues, createIssue } from '../api';
+import { issueCreateRequested } from '../actions';
 
 function* fetchIssuesSaga () {
   try {
@@ -29,10 +30,23 @@ function* fetchIssuesSaga () {
   }
 }
 
+function* createIssueSaga (action) {
+  const { payload } = action;
+
+  try {
+    const response = yield call(createIssue, payload);
+  } catch (e) {
+
+  }
+
+}
+
 function* mainSaga() {
   yield all([
-    call(fetchIssuesSaga)
+    call(fetchIssuesSaga),
   ])
+
+  yield takeEvery(issueCreateRequested, createIssueSaga);
 }
 
 export default mainSaga;
