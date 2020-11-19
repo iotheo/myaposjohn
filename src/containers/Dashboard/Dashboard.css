@@ -8,3 +8,7 @@
 .loading-spinner__message {
     font-size: 1.2rem;
 }
+
+.close-issue-modal__footer > button:first-child {
+    margin-right: 0.4rem;
+}

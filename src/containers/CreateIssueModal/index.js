@@ -39,8 +39,8 @@ const CreateIssueModal = ({ showModal, onSubmit, handleCloseModal, onChange, inp
             />
           </Form.Group>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
+            <Button variant="outline-secondary" onClick={handleCloseModal}>
+              Cancel
             </Button>
             <Button variant="primary" type="submit">
               Create Issue

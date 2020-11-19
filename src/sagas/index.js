@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest, delay, all } from 'redux-saga/effects';
-import { fetchIssues, createIssue } from '../api';
-import { issueCreateRequested } from '../actions';
+import { fetchIssues, createIssue, closeIssue } from '../api';
+import { issueCloseFailed, issueCloseRequested, issueCloseSucceded, issueCreateRequested, issuesFetchFailed, issuesFetchSucceeded } from '../actions';
 
 function* fetchIssuesSaga () {
   try {
@@ -10,23 +10,22 @@ function* fetchIssuesSaga () {
 
     // This is considered an error message
     if(response.message) {
-      return yield put({
-        type: 'ISSUES_FETCH_FAILED',
-        error: {
-          message: response.message
+
+      // Early bail out on error
+      return yield put(issuesFetchFailed(() => {
+        return {
+          error: {
+            message: response.message
+          }
         }
-      });
+      }));
     }
 
-    yield put({
-      type: 'ISSUES_FETCH_SUCCEEDED',
+    yield put(issuesFetchSucceeded({
       results: response,
-    })
+    }))
   } catch (error) {
-    yield put({
-      type: 'ISSUES_FETCH_FAILED',
-      error,
-    });
+    yield put(issuesFetchFailed(error));
   }
 }
 
@@ -38,7 +37,22 @@ function* createIssueSaga (action) {
   } catch (e) {
 
   }
+}
 
+function* closeIssueSaga (action) {
+  const { payload } = action;
+
+  try {
+    const response = yield call(closeIssue, payload);
+
+    yield put(issueCloseSucceded(response));
+
+  } catch (error) {
+    yield put ({
+      issueCloseFailed,
+      error,
+    });
+  }
 }
 
 function* mainSaga() {
@@ -47,6 +61,7 @@ function* mainSaga() {
   ])
 
   yield takeEvery(issueCreateRequested, createIssueSaga);
+  yield takeEvery(issueCloseRequested, closeIssueSaga);
 }
 
 export default mainSaga;
