@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { issueCloseSucceded, issuesFetchFailed, issuesFetchSucceeded, renderIssuesSpinner } from '../actions';
+import { issueCloseSucceded, issueCreateSucceeded, issuesFetchFailed, issuesFetchSucceeded, renderIssuesSpinner } from '../actions';
 
 export const issuesReducer = createReducer({
   isLoading: true,
@@ -21,12 +21,19 @@ export const issuesReducer = createReducer({
       state.shouldRenderSpinner = true;
     })
 
+    builder.addCase(issueCreateSucceeded, (state, action) => {
+      const { payload } = action;
+
+      state.results.unshift(payload);
+    })
+
     builder.addCase(issueCloseSucceded, (state, action) => {
       const { payload } = action;
       const issueNumber = payload.number;
 
       state.results = state.results.filter(issue => issue.number !== issueNumber);
     })
+
 
     builder.addDefaultCase(() => {})
   }

@@ -1,6 +1,14 @@
 import { call, put, takeEvery, takeLatest, delay, all } from 'redux-saga/effects';
 import { fetchIssues, createIssue, closeIssue } from '../api';
-import { issueCloseFailed, issueCloseRequested, issueCloseSucceded, issueCreateRequested, issuesFetchFailed, issuesFetchSucceeded } from '../actions';
+import {
+  issueCloseFailed,
+  issueCloseRequested,
+  issueCloseSucceded,
+  issueCreateRequested,
+  issueCreateSucceeded,
+  issuesFetchFailed,
+  issuesFetchSucceeded
+} from '../actions';
 
 function* fetchIssuesSaga () {
   try {
@@ -34,6 +42,9 @@ function* createIssueSaga (action) {
 
   try {
     const response = yield call(createIssue, payload);
+
+
+    yield put(issueCreateSucceeded(response));
   } catch (e) {
 
   }
