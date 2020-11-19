@@ -32,6 +32,7 @@ const CreateIssueModal = ({ showModal, onSubmit, handleCloseModal, onChange, inp
               onChange={onChange}
               type="text"
               placeholder="Leave a comment"
+              rows="5"
               as="textarea"
               name="body"
               value={inputs.body}
