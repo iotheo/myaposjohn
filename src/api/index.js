@@ -1,6 +1,6 @@
 const URL = 'https://api.github.com/repos/myapos/testing_repo/issues';
 const headers = {
-  'authorization': 'token 8a565ede440c3b96d873d863d694f3fc26536481',
+  'authorization': `token ${process.env.REACT_APP_GITHUB_AUTH_TOKEN}`,
     'Content-Type': 'application/json',
 }
 
@@ -20,6 +20,7 @@ const closeIssueOptions = {
 }
 
 export async function fetchIssues () {
+  debugger
   return await fetch(URL, fetchOptions)
     .then(res => res.json())
     .catch(err => err)
