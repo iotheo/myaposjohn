@@ -20,7 +20,6 @@ const closeIssueOptions = {
 }
 
 export async function fetchIssues () {
-  debugger
   return await fetch(URL, fetchOptions)
     .then(res => res.json())
     .catch(err => err)
