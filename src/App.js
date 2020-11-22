@@ -3,18 +3,14 @@ import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
 import { useDispatch, useSelector } from "react-redux";
-import SearchBar from "./components/Searchbar";
 import { Button } from 'react-bootstrap';
 
 import CreateIssueModal from './containers/CreateIssueModal';
-import Alert from './containers/Alert';
-import { closeAlert, issueCreateRequested } from './actions';
+import { issueCreateRequested } from './actions';
 
 
 
 function App() {
-  const showAlert = useSelector(state => state.alert.shouldShowAlert);
-
   const [isAuthenticated, setAuthenticated] = useState(true);
   const [hasSubmitted, setSubmitted] = useState();
 
@@ -77,9 +73,7 @@ function App() {
   return (
     <>
       <div className="dashboard">
-        <Button variant="success" className="mb-3" onClick={() => setShowModal(true)}>New Issue</Button>
-        <SearchBar />
-        <Alert in={showAlert} onClose={() => dispatch(closeAlert())} />
+        <Button variant="success" className="mb-3 d-block" onClick={() => setShowModal(true)}>New Issue</Button>
         <Dashboard />
       </div>
       <CreateIssueModal

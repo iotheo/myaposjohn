@@ -2,23 +2,27 @@ import React, { useState } from 'react';
 import { Button, Dropdown, Modal } from 'react-bootstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
-import filterFactory from 'react-bootstrap-table2-filter';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faBan } from '@fortawesome/free-solid-svg-icons';
 
 
-import { useDispatch } from 'react-redux';
-import { issueCloseRequested } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeAlert, issueCloseRequested } from '../../actions';
+import Alert from '../Alert';
+
+const { SearchBar } = Search;
 
 const IssuesTable = ({ results }) => {
+  const showAlert = useSelector(state => state.alert.shouldShowAlert);
+  const dispatch = useDispatch();
+
   const [showModal, setShowModal] = useState();
   const [selectedIssueToClose, setSelectedIssueToClose] = useState({
     title: '',
     id: '',
   });
-
-  const dispatch = useDispatch();
 
   function handleCloseAction({ title, number }) {
     setSelectedIssueToClose(prevState => ({
@@ -84,16 +88,26 @@ const IssuesTable = ({ results }) => {
 
   return (
     <>
-      <BootstrapTable
-          filter={filterFactory({
-            delay: 200,
-          })}
-          striped
-          hover
-          keyField="id"
-          data={results}
-          classes="issues-table"
-          columns={columns} />
+      <ToolkitProvider
+        keyField="id"
+        data={results}
+        columns={columns}
+        search
+      >
+        { props => (
+            <>
+              <SearchBar placeholder="Search for an issue.." {...props.searchProps} />
+              <Alert in={showAlert} onClose={() => dispatch(closeAlert())} />
+              <BootstrapTable
+                striped
+                hover
+                classes="issues-table"
+                {...props.baseProps}
+              />
+            </>
+          )
+        }
+      </ToolkitProvider>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Close Issue</Modal.Title>
