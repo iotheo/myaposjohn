@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import CreateIssueModal from './containers/CreateIssueModal';
@@ -10,7 +10,7 @@ import { issueCreateRequested } from './actions';
 
 
 
-function App() {
+function App () {
   const [isAuthenticated, setAuthenticated] = useState();
   const [hasSubmitted, setSubmitted] = useState();
 
