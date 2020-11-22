@@ -15,8 +15,6 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-
-
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(renderIssuesSpinner())
@@ -27,17 +25,19 @@ const Dashboard = () => {
 
   if (!isLoading && results?.length) {
     return (
-      <IssuesTable results={results} />
+      <>
+        <IssuesTable results={results} />
+      </>
     )
   }
 
   if (isLoading && shouldRenderSpinner) {
     return (
       <div className="loading-spinner">
-      <div className="mb-4 loading-spinner__message">Loading issues..</div>
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+        <div className="mb-4 loading-spinner__message">Loading issues..</div>
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
       </div>
     )
   }

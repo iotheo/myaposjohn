@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware, combineReducers } from "@reduxjs/
 import createSagaMiddleware from 'redux-saga';
 import sagas from '../sagas';
 
-import { issuesReducer } from '../reducers';
+import { alertReducer, issuesReducer } from '../reducers';
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware]
@@ -10,6 +10,7 @@ const middlewares = [sagaMiddleware]
 const store = configureStore({
   reducer: combineReducers({
     issues: issuesReducer,
+    alert: alertReducer,
   }),
   devTools: {
     name: "Myapos John"

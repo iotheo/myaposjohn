@@ -34,3 +34,9 @@ html {
 .dashboard {
   padding: 2vw 3vw;
 }
+
+@media (min-width: 768px) {
+  .alert {
+    text-align: center;
+  }
+}
