@@ -59,7 +59,7 @@ function App() {
     /* Before judging, this is the most secure thing you've ever seen.
       Prove me wrong 🤣
     */
-    if (username === 'john' && password === 'secret') {
+    if (username === process.env.REACT_APP_USERNAME && password === process.env.REACT_APP_PASSWORD) {
       setAuthenticated(true);
     }
 
