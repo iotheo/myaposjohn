@@ -1,7 +1,7 @@
 const URL = 'https://api.github.com/repos/myapos/testing_repo/issues';
 const headers = {
   'authorization': `token ${process.env.REACT_APP_GITHUB_AUTH_TOKEN}`,
-    'Content-Type': 'application/json',
+  'Content-Type': 'application/json',
 }
 
 const fetchOptions = {
@@ -19,31 +19,42 @@ const closeIssueOptions = {
   headers,
 }
 
+async function myFetch (URL, options) {
+  return await fetch(URL, options)
+  .then(res => {
+    if (res.status >=400 && res.status < 500) {
+      return {
+        error: {
+          status: res.status,
+          statusText: res.statusText
+        }
+      }
+    }
+
+    return res.json();
+  })
+  .catch(err => err)
+}
+
 export async function fetchIssues () {
-  return await fetch(URL, fetchOptions)
-    .then(res => res.json())
-    .catch(err => err)
+  return myFetch(URL, fetchOptions);
 }
 
 export async function createIssue (payload) {
-  return await fetch(URL, {
+  return myFetch(URL, {
     ...createIssueOptions,
     body: JSON.stringify(payload)
   })
-    .then(res => res.json())
-    .catch(err => err)
 }
 
 export async function closeIssue ({ number }) {
   const ENDPOINT = `${URL}/${number}`;
 
-  return await fetch(ENDPOINT, {
+  return await myFetch(ENDPOINT, {
     ...closeIssueOptions,
     body: JSON.stringify({
       number,
       state: 'closed',
     })
-  })
-    .then(res => res.json())
-    .catch(err => err)
+  });
 }

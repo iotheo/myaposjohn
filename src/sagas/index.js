@@ -4,6 +4,7 @@ import {
   issueCloseFailed,
   issueCloseRequested,
   issueCloseSucceeded,
+  issueCreateFailed,
   issueCreateRequested,
   issueCreateSucceeded,
   issuesFetchFailed,
@@ -13,20 +14,8 @@ import {
 function* fetchIssuesSaga () {
   try {
     const response = yield call(fetchIssues);
-
-    // yield delay(5000);
-
-    // This is considered an error message
-    if(response.message) {
-
-      // Early bail out on error
-      return yield put(issuesFetchFailed(() => {
-        return {
-          error: {
-            message: response.message
-          }
-        }
-      }));
+    if(response.error) {
+      return yield put(issuesFetchFailed(response.error));
     }
 
     yield put(issuesFetchSucceeded({
@@ -42,11 +31,16 @@ function* createIssueSaga (action) {
 
   try {
     const response = yield call(createIssue, payload);
-
+    if (response.error) {
+      return yield put(issueCreateFailed(response.error));
+    }
 
     yield put(issueCreateSucceeded(response));
-  } catch (e) {
 
+  } catch (err) {
+
+    debugger;
+    yield put(issueCreateFailed, err);
   }
 }
 
@@ -55,6 +49,10 @@ function* closeIssueSaga (action) {
 
   try {
     const response = yield call(closeIssue, payload);
+
+    if (response.error) {
+      return yield put(issueCloseFailed(response.error));
+    }
 
     yield put(issueCloseSucceeded(response));
 
