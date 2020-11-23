@@ -2,11 +2,11 @@ import { useState } from "react";
 import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dropdown } from 'react-bootstrap';
 
 import CreateIssueModal from './containers/CreateIssueModal';
-import { issueCreateRequested } from './actions';
+import { hasSubmitted, issueCreateRequested } from './actions';
 import useLocalStorage from './hooks/useLocalStorage';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function App () {
   const [isAuthenticated, setAuthenticated] = useLocalStorage('auth', false);
-  const [hasSubmitted, setSubmitted] = useState();
+  const submitted = useSelector(state => state.login.hasSubmitted);
 
   const [showModal, setShowModal] = useState(false);
   const [modalInputs, setModalInputs] = useState({
@@ -65,11 +65,11 @@ function App () {
       setAuthenticated(true);
     }
 
-    setSubmitted(true);
+    dispatch(hasSubmitted());
   }
 
   if (!isAuthenticated) {
-    return <LoginForm onLogin={handleLogin} hasSubmitted={hasSubmitted} />;
+    return <LoginForm onLogin={handleLogin} hasSubmitted={submitted} />;
   }
 
   return (

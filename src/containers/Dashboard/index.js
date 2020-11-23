@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {  useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { renderIssuesSpinner } from '../../actions';
+import { hasLogged, renderIssuesSpinner } from '../../actions';
 
 import IssuesTable from './IssuesTable';
 
@@ -14,6 +14,11 @@ const Dashboard = () => {
   const results = useSelector(state => state.issues.results);
 
   const dispatch = useDispatch();
+
+  // hack to prevent submission errors
+  useEffect(() => {
+    dispatch(hasLogged());
+  }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

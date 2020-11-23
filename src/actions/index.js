@@ -12,6 +12,8 @@ const ISSUE_CLOSE_REQUESTED = 'ISSUE_CLOSE_REQUESTED';
 const ISSUE_CLOSE_SUCCEEDED = 'ISSUE_CLOSE_SUCCEEDED';
 const ISSUE_CLOSE_FAILED = 'ISSUE_CLOSE_FAILED';
 const CLOSE_ALERT = 'CLOSE_ALERT';
+const HAS_LOGGED = 'HAS_LOGGED';
+const HAS_SUBMITTED = 'HAS_SUBMITTED';
 
 export const issueCreate = createAction(ISSUE_CREATE);
 export const issueCreateSucceeded = createAction(ISSUE_CREATE_SUCCEEDED);
@@ -25,3 +27,5 @@ export const issueCloseRequested = createAction(ISSUE_CLOSE_REQUESTED);
 export const issueCloseSucceeded = createAction(ISSUE_CLOSE_SUCCEEDED);
 export const issueCloseFailed = createAction(ISSUE_CLOSE_FAILED);
 export const closeAlert = createAction(CLOSE_ALERT);
+export const hasLogged = createAction(HAS_LOGGED);
+export const hasSubmitted = createAction(HAS_SUBMITTED);
