@@ -6,7 +6,7 @@ import createDecorator from 'final-form-focus';
 const focusOnErrors = createDecorator();
 
 const LoginForm = ({ onLogin, hasSubmitted }) => {
-  const required = value => (value ? undefined : 'This field is required')
+  const required = value => (value ? undefined : 'This field is required');
 
   return <Form onSubmit={onLogin} decorators={[focusOnErrors]} >
     {({ handleSubmit }) => (

@@ -3,15 +3,17 @@ import "./App.css";
 import LoginForm from "./containers/LoginForm";
 import Dashboard from './containers/Dashboard';
 import { useDispatch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 
 import CreateIssueModal from './containers/CreateIssueModal';
 import { issueCreateRequested } from './actions';
-
+import useLocalStorage from './hooks/useLocalStorage';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 function App () {
-  const [isAuthenticated, setAuthenticated] = useState();
+  const [isAuthenticated, setAuthenticated] = useLocalStorage('auth', false);
   const [hasSubmitted, setSubmitted] = useState();
 
   const [showModal, setShowModal] = useState(false);
@@ -73,8 +75,18 @@ function App () {
   return (
     <>
       <div className="dashboard">
-        <Button variant="success" className="mb-3 d-block" onClick={() => setShowModal(true)}>New Issue</Button>
-        <Dashboard />
+        <div className="dashboard__user-actions mb-3">
+          <Button variant="success" onClick={() => setShowModal(true)}>New Issue</Button>
+          <Dropdown className="user-dropdown">
+            <Dropdown.Toggle variant="secondary" id="user">
+                <FontAwesomeIcon color="#aaa" icon={faUser} />
+              </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setAuthenticated(false)}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+          <Dashboard />
       </div>
       <CreateIssueModal
         onExited={onExited}

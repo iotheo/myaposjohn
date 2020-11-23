@@ -35,6 +35,51 @@ html {
   padding: 2vw 3vw;
 }
 
+.dashboard__user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-dropdown > button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+}
+
+.user-dropdown > button:after {
+  display: none;
+}
+
+
+.user-dropdown > button:hover,
+.user-dropdown > button:active {
+  background-color: transparent !important;
+  border-color: transparent;
+}
+
+.user-dropdown .btn-secondary:not(:disabled):not(.disabled).active:focus,
+.user-dropdown .btn-secondary:not(:disabled):not(.disabled):active:focus,
+.user-dropdown.show>.btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 1px hsl(0,0,80%);
+    background-color: transparent;
+}
+
+.user-dropdown .btn-secondary:not(:disabled):not(.disabled).active,
+.user-dropdown .btn-secondary:not(:disabled):not(.disabled):active,
+.user-dropdown.show>.btn-secondary.dropdown-toggle {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.51)
+}
+
+.user-dropdown .btn-secondary.focus,
+.user-dropdown .btn-secondary:focus {
+  background-color: transparent;
+  border-color: #bbb;
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.51);
+}
+
 @media (min-width: 768px) {
   .alert {
     text-align: center;
