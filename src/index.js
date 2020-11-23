@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
+import { Helmet } from "react-helmet";
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -13,11 +14,16 @@ import reportWebVitals from './reportWebVitals';
 console.log(store)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+  <>
+    <Helmet>
+      <title>Github Repo Issue Manager</title>
+    </Helmet>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  </>,
   document.getElementById('root')
 );
 
